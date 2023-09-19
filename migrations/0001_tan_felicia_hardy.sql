@@ -1,0 +1,1 @@
+ALTER TABLE todos ADD `userId` integer NOT NULL;

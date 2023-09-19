@@ -1,16 +1,24 @@
-import { Elysia, t } from 'elysia';
+import { Elysia, t, Context, TypedSchemaToRoute } from 'elysia';
 import { eq } from 'drizzle-orm';
 import * as elements from 'typed-html';
-import { html } from '@elysiajs/html';
 import Todos from '../components/Todos';
 import TodoItem from '../components/TodoItem';
 import { todos } from '../db/schema';
 import { db } from '../db';
+import { CookieRequest } from '@elysiajs/cookie';
+import cookie from '@elysiajs/cookie';
 
-const todosRouter = new Elysia();
+const todosRouter = new Elysia({
+    name: '@elysiajs/cookie',
+});
 
-todosRouter.use(html()).group('/todos', (app) =>
+todosRouter.group('/todos', (app) =>
     app
+        .derive((context: any) => {
+            return {
+                user: true,
+            };
+        })
         .get('/', async () => {
             const data = await db.select().from(todos).all();
             return <Todos data={data} />;
@@ -27,6 +35,7 @@ todosRouter.use(html()).group('/todos', (app) =>
                     .values({
                         title: body.title,
                         completed: false,
+                        userId: 1,
                     })
                     .returning()
                     .get();
