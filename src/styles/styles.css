@@ -6,4 +6,8 @@
     html {
         @apply w-screen h-screen bg-zinc-900;
     }
+
+    input {
+        @apply bg-zinc-700;
+    }
 }
