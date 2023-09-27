@@ -101,6 +101,7 @@ authRoutes
             maxAge: 604800,
             value: token,
             path: '/',
+            sameSite: 'strict',
         });
 
         set.headers['HX-Redirect'] = '/';
