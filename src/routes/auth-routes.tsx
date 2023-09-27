@@ -87,6 +87,7 @@ authRoutes
         const isMatched = await Bun.password.verify(password, user.password);
         if (!isMatched) {
             set.status = HttpStatus.BAD_REQUEST;
+            return;
         }
 
         const currentDate = new Date();
