@@ -6,6 +6,14 @@ const App = () => (
         <div class="py-4"></div>
         <h1 class="text-5xl text-center text-blue-400">BETH TODO APP</h1>
         <div class="py-6"></div>
+        <div class="flex items-center justify-center">
+            <button
+                hx-post="/auth/sign-out"
+                class="px-6 hover:text-red-400 transition text-zinc-100"
+            >
+                Sign Out
+            </button>
+        </div>
         <div class="py-6"></div>
         <form
             class="text-zinc-100 w-full flex justify-center gap-4"
