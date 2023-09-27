@@ -6,7 +6,11 @@ import { html } from '@elysiajs/html';
 import { jwt } from '@elysiajs/jwt';
 import { db } from '../db';
 import jwtConfig from '../configs/jwt';
-import { type StoreWithMaybeUser, protect } from '../plugins/protect';
+import {
+    type StoreWithMaybeUser,
+    type StoreWithSession,
+    protect,
+} from '../plugins/protect';
 import HttpStatus from '../enums/http-status';
 import Base from '../components/Base';
 import { SignIn } from '../components/SignIn';
@@ -29,7 +33,11 @@ const authRoutes = new Elysia({
 });
 
 authRoutes
-    .use(protect())
+    .use(
+        protect({
+            post: ['/auth/sign-out'],
+        })
+    )
     .use(html())
     .use(jwt(jwtConfig))
     .guard(routeGuard)
@@ -134,6 +142,12 @@ authRoutes
         });
 
         set.status = HttpStatus.CREATED;
+        set.headers['HX-Redirect'] = '/auth/sign-in';
+    })
+    .post('/sign-out', async ({ set, cookie, store }) => {
+        const { session } = store as StoreWithSession;
+        await db.delete(sessions).where(eq(sessions.id, session.id)).run();
+        cookie.session.remove();
         set.headers['HX-Redirect'] = '/auth/sign-in';
     });
 

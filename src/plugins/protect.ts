@@ -3,8 +3,9 @@ import { eq } from 'drizzle-orm';
 import { type JWTPayloadSpec, jwt } from '@elysiajs/jwt';
 import { db } from '../db';
 import jwtConfig from '../configs/jwt';
-import { type UserSelect, sessions, users } from '../db/schema';
+import { sessions, users } from '../db/schema';
 import HttpStatus from '../enums/http-status';
+import type { UserSelect, SessionSelect } from '../db/schema';
 
 export type RequestMethod =
     | 'get'
@@ -33,7 +34,11 @@ export type SessionToken =
     | false;
 
 export type StoreWithUser = { user: UserSelect };
+export type StoreWithSession = { session: SessionSelect };
 export type StoreWithMaybeUser = { user?: UserSelect };
+export type StoreWithMaybeSession = { session?: SessionSelect };
+export type StoreWithAuth = StoreWithUser & StoreWithSession;
+export type StoreWithMaybeAuth = StoreWithMaybeUser & StoreWithMaybeSession;
 
 export const protect = (config: ProtectConfig = {}) => {
     if (!config.get) config.get = [];
@@ -132,6 +137,7 @@ export const protect = (config: ProtectConfig = {}) => {
 
             context.store = {
                 user: user,
+                session: sessionInfo,
                 ...context.store,
             };
         });
