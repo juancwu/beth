@@ -1,4 +1,4 @@
-import * as elements from 'typed-html';
+import Html from '@kitajs/html';
 import type { TodoSelect } from '../db/schema';
 
 const TodoItem = ({ id, title, completed }: TodoSelect) => {

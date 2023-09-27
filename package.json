@@ -24,11 +24,15 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@elysiajs/cookie": "^0.6.1",
-    "@elysiajs/html": "^0.6.5",
+    "@bogeychan/elysia-logger": "^0.0.9",
+    "@elysiajs/html": "0.7.0",
+    "@elysiajs/jwt": "^0.7.0",
+    "@kitajs/html": "^2.2.2",
+    "@kitajs/ts-html-plugin": "^1.0.2",
     "@libsql/client": "^0.3.4",
     "drizzle-orm": "^0.28.6",
-    "elysia": "^0.6.23",
-    "typed-html": "^3.0.1"
+    "elysia": "0.7.3",
+    "nanoid": "^5.0.1",
+    "picocolors": "^1.0.0"
   }
 }
