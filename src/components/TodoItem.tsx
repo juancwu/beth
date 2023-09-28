@@ -3,22 +3,25 @@ import type { TodoSelect } from '../db/schema';
 
 const TodoItem = ({ id, title, completed }: TodoSelect) => {
     return (
-        <li class="flex items-center gap-4">
-            <span class="text-zinc-100 px-2 text-2xl">{title}</span>
-            <input
-                type="checkbox"
-                checked={completed}
-                hx-patch={`/todos/toggle/${id}`}
-                hx-target="closest li"
-                hx-swap="outerHTML"
-            />
+        <li class="flex items-center justify-between gap-4 w-full border-solid border-b-2 border-b-white/10 py-2 px-2">
+            <div class="flex gap-2 items-center">
+                <input
+                    type="checkbox"
+                    checked={completed}
+                    hx-patch={`/todos/toggle/${id}`}
+                    hx-target="closest li"
+                    hx-swap="outerHTML"
+                    class="w-5 h-5"
+                />
+                <span class="text-zinc-100 px-2">{title}</span>
+            </div>
             <button
-                class="p-2 text-red-400"
+                class="px-2 py-0.5 rounded bg-red-950 border-solid border-2 border-red-500 text-red-300"
                 hx-delete={`/todos/${id}`}
                 hx-target="closest li"
                 hx-swap="outerHTML"
             >
-                X
+                Delete
             </button>
         </li>
     );
