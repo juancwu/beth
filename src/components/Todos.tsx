@@ -10,7 +10,7 @@ const Todos = ({ data }: TodosProps) => {
     return (
         <ul
             id="todosContainer"
-            class="flex items-center justify-center flex-col"
+            class="flex items-center justify-center flex-col gap-4"
         >
             {data.map((todo) => (
                 <TodoItem {...todo} />

@@ -19,7 +19,7 @@ const Base = ({ children }: Html.PropsWithChildren) => {
                     ></script>
                     <link href="/styles.css" rel="stylesheet" />
                 </head>
-                <body>${children}</body>
+                <body class="w-full h-full">{children}</body>
             </html>
         </>
     );

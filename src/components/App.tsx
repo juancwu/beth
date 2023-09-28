@@ -1,43 +1,45 @@
 import Html from '@kitajs/html';
 import Base from './Base';
+import Nav from './Nav';
 
 const App = () => (
     <Base>
-        <div class="py-4"></div>
-        <h1 class="text-5xl text-center text-blue-400">BETH TODO APP</h1>
-        <div class="py-6"></div>
-        <div class="flex items-center justify-center">
-            <button
-                hx-post="/auth/sign-out"
-                class="px-6 hover:text-red-400 transition text-zinc-100"
-            >
-                Sign Out
-            </button>
+        <Nav />
+        <div class="px-6">
+            <div class="py-8">
+                <form
+                    class="text-zinc-100 w-full flex justify-center gap-4"
+                    hx-post="/todos"
+                    hx-target="#todosContainer"
+                    hx-swap="beforeend"
+                >
+                    <div>
+                        <label html-for="todoTitle">Todo Title</label>
+                        <input
+                            type="text"
+                            id="todoTitle"
+                            class="block px-4 py-2 text-white rounded"
+                            name="title"
+                        />
+                    </div>
+                    <div class="flex items-end">
+                        <button
+                            type="submit"
+                            class="px-8 py-1.5 bg-emerald-950 border-solid border-emerald-500 text-emerald-300 border-2 rounded"
+                        >
+                            Add
+                        </button>
+                    </div>
+                </form>
+                <div class="h-4"></div>
+                <div
+                    class="lg:px-32 md:px-20"
+                    hx-get="/todos"
+                    hx-trigger="load"
+                    hx-swap="innerHTML"
+                ></div>
+            </div>
         </div>
-        <div class="py-6"></div>
-        <form
-            class="text-zinc-100 w-full flex justify-center gap-4"
-            hx-post="/todos"
-            hx-target="#todosContainer"
-            hx-swap="beforeend"
-        >
-            <label html-for="todoTitle">Todo Title</label>
-            <input
-                type="text"
-                id="todoTitle"
-                class="text-zinc-900"
-                name="title"
-            />
-            <button type="submit" class="px-6 hover:text-blue-400 transition">
-                Add
-            </button>
-        </form>
-        <div
-            class="px-8"
-            hx-get="/todos"
-            hx-trigger="load"
-            hx-swap="innerHTML"
-        ></div>
     </Base>
 );
 
