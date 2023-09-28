@@ -6,12 +6,13 @@
     "dev": "concurrently \"bun run --watch src/index.tsx\" \"bun run tw\" \"bun run studio\"",
     "tw": "tailwindcss -i ./src/styles/styles.css -o ./dist/styles.css --watch",
     "tw:prod": "tailwindcss -i ./src/styles/styles.css -o ./dist/styles.css --minify",
-    "prebuild": "bun run tw:prod",
+    "predeploy": "bun run tw:prod",
     "prestart": "bun run migrate",
     "predev": "bun run migrate",
     "generate": "drizzle-kit generate:sqlite --out ./migrations",
     "migrate": "bun run ./migrations/migrate.ts",
-    "studio": "drizzle-kit studio --port 3333"
+    "studio": "drizzle-kit studio --port 3333",
+    "deploy": "fly deploy"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "latest",

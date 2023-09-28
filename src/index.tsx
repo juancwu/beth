@@ -19,9 +19,6 @@ app.use(html())
             set.redirect = '/auth/sign-in';
             return;
         }
-        if (process.env.APP_ENV !== 'dev') {
-            set.headers['cache-control'] = 'public, max-age=604800';
-        }
 
         return html(<App />);
     })
