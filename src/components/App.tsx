@@ -14,23 +14,30 @@ const App = () => (
                     hx-swap="beforeend"
                 >
                     <div>
-                        <label html-for="todoTitle">Todo Title</label>
+                        <label for="todoTitle">Todo Title</label>
+                        <span id="todoInputDescription" class="sr-only">
+                            Enter new todo title
+                        </span>
                         <input
                             type="text"
                             id="todoTitle"
                             class="block px-4 py-2 text-white rounded"
                             name="title"
+                            aria-describedby="todoInputDescription"
                         />
                     </div>
                     <div class="flex items-end">
                         <button
                             type="submit"
                             class="px-8 py-1.5 bg-emerald-950 border-solid border-emerald-500 text-emerald-300 border-2 rounded"
+                            aria-label="Click to add new todo"
                         >
                             Add
                         </button>
                     </div>
                 </form>
+                <div class="h-6"></div>
+                <h2 class="text-white text-2xl text-center">Todos</h2>
                 <div class="h-4"></div>
                 <div
                     class="lg:px-32 md:px-20"
