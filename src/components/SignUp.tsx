@@ -15,7 +15,7 @@ export const SignUp = ({ error = '' }: SignUpProps) => (
             <form
                 id="form"
                 class="text-zinc-100 flex items-center justify-center gap-4 flex-col"
-                hx-post="/auth/sign-in"
+                hx-post="/auth/sign-up"
             >
                 <div>
                     <label html-for="email">Email</label>
