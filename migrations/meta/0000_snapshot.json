@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "fa62ca7a-8890-4121-91bb-8b1957c30395",
+  "id": "00983b4b-9595-41f0-9d52-dbfd6de8ebad",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "sessions": {
@@ -41,6 +41,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "userAgent": {
+          "name": "userAgent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         }
       },
@@ -101,6 +108,13 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "listId": {
+          "name": "listId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -108,6 +122,72 @@
         "todos_userId_users_id_fk": {
           "name": "todos_userId_users_id_fk",
           "tableFrom": "todos",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "todos_listId_todosLists_id_fk": {
+          "name": "todos_listId_todosLists_id_fk",
+          "tableFrom": "todos",
+          "tableTo": "todosLists",
+          "columnsFrom": [
+            "listId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "todosLists": {
+      "name": "todosLists",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "todosLists_title_userId_unique": {
+          "name": "todosLists_title_userId_unique",
+          "columns": [
+            "title",
+            "userId"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "todosLists_userId_users_id_fk": {
+          "name": "todosLists_userId_users_id_fk",
+          "tableFrom": "todosLists",
           "tableTo": "users",
           "columnsFrom": [
             "userId"

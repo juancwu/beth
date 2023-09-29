@@ -1,10 +1,5 @@
-import { integer, text, sqliteTable } from 'drizzle-orm/sqlite-core';
-import {
-    InferSelectModel,
-    InferInsertModel,
-    relations,
-    sql,
-} from 'drizzle-orm';
+import { unique, integer, text, sqliteTable } from 'drizzle-orm/sqlite-core';
+import { InferSelectModel, InferInsertModel, sql } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 
 export type UserMetadata = {
@@ -27,7 +22,27 @@ export const todos = sqliteTable('todos', {
         .references(() => users.id, {
             onDelete: 'cascade',
         }),
+    listId: integer('listId', { mode: 'number' }).references(
+        () => todosLists.id,
+        { onDelete: 'cascade' }
+    ),
 });
+
+export const todosLists = sqliteTable(
+    'todosLists',
+    {
+        id: integer('id', { mode: 'number' }).primaryKey({
+            autoIncrement: true,
+        }),
+        title: text('title').notNull(),
+        userId: integer('userId', { mode: 'number' })
+            .notNull()
+            .references(() => users.id, { onDelete: 'cascade' }),
+    },
+    (t) => ({
+        uniqListTitle: unique().on(t.title, t.userId),
+    })
+);
 
 export const sessions = sqliteTable('sessions', {
     id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
@@ -42,28 +57,11 @@ export const sessions = sqliteTable('sessions', {
     userAgent: text('userAgent'),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
-    todos: many(todos),
-    sessions: many(sessions),
-}));
-
-export const todosRelations = relations(todos, ({ one }) => ({
-    user: one(users, {
-        fields: [todos.userId],
-        references: [users.id],
-    }),
-}));
-
-export const sessionsRelations = relations(sessions, ({ one }) => ({
-    user: one(users, {
-        fields: [sessions.userId],
-        references: [users.id],
-    }),
-}));
-
 export type UserSelect = InferSelectModel<typeof users>;
 export type UserInsert = InferInsertModel<typeof users>;
 export type TodoSelect = InferSelectModel<typeof todos>;
 export type TodoInsert = InferInsertModel<typeof todos>;
 export type SessionSelect = InferSelectModel<typeof sessions>;
 export type SessionInsert = InferInsertModel<typeof sessions>;
+export type TodoListSelect = InferSelectModel<typeof todosLists>;
+export type TodoListInsert = InferInsertModel<typeof todosLists>;
