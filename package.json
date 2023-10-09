@@ -7,6 +7,7 @@
     "tw": "tailwindcss -i ./src/styles/styles.css -o ./dist/styles.css --watch",
     "tw:prod": "tailwindcss -i ./src/styles/styles.css -o ./dist/styles.css --minify",
     "predeploy": "bun run tw:prod",
+    "prebuild": "bun run tw:prod",
     "prestart": "bun run migrate",
     "predev": "bun run migrate",
     "generate": "drizzle-kit generate:sqlite --out ./migrations",
