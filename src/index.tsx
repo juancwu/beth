@@ -5,8 +5,6 @@ import App from './components/App';
 import authRoutes from './routes/auth-routes';
 import todosRoutes from './routes/todos-routes';
 import { type StoreWithMaybeUser } from './plugins/protect';
-import { readdir } from 'node:fs/promises';
-import { join } from 'node:path';
 
 const app = new Elysia();
 
@@ -29,15 +27,7 @@ app.use(html())
             set.headers['cache-control'] = 'public, max-age=604800';
         }
 
-        try {
-            const filenames = await readdir('./dist');
-            const filepaths = filenames.map((path) => join('./dist', path));
-            filepaths.forEach((path) => console.log(path));
-        } catch (error: any) {
-            console.log(error);
-        }
-
-        return Bun.file('./dist/styles.css');
+        return Bun.file('dist/styles.css');
     })
     .guard({
         cookie: t.Cookie(
